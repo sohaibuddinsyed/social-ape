@@ -84,7 +84,10 @@ exports.login=(req,res)=>{
     .catch((err)=>{
         console.error(err);
         if(err.code==='auth/wrong-password'){
-            return res.status(403).json({general:'Wrong credentials,please try again'});
+            return res.status(403).json({general:'Wrong password, please try again'});
+        }
+        if(err.code==='auth/user-not-user'){
+            return res.status(403).json({general:'Invalid user name'});
         }
         return res.status(500).json({error: err.code});
     });
