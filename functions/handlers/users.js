@@ -71,7 +71,7 @@ exports.login=(req,res)=>{
 
     const{ valid,errors}=validateLoginData(user);
 
-    if(!valid) return res.status(400).json({errors});
+    if(!valid) return res.status(400).json(errors);
     
 
     firebase.auth().signInWithEmailAndPassword(user.email,user.password)
@@ -86,7 +86,7 @@ exports.login=(req,res)=>{
         if(err.code==='auth/wrong-password'){
             return res.status(403).json({general:'Wrong password, please try again'});
         }
-        if(err.code==='auth/user-not-user'){
+        if(err.code==='auth/user-not-found'){
             return res.status(403).json({general:'Invalid user name'});
         }
         return res.status(500).json({error: err.code});
